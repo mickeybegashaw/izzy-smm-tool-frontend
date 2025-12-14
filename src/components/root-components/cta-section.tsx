@@ -32,7 +32,7 @@ export function CTASection() {
               Schedule a demo
             </Button>
           </div>
-          <p className="text-sm text-white/80 mt-6">No credit card required • 14-day free trial • Cancel anytime</p>
+          <p className="text-sm text-white/80 mt-6">14-day free trial • Cancel anytime</p>
         </div>
       </div>
     </section>

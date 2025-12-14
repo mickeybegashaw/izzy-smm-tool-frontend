@@ -35,9 +35,9 @@ export function Header() {
         {/* Right actions */}
         <div className="hidden md:flex items-center gap-3 ">
           <ThemeToggle />
-          <Button variant="ghost" className="text-sm font-medium inline-flex">
+          <Link href={'/signin'} className="text-sm text-foreground font-medium inline-flex">
             Sign in
-          </Button>
+          </Link>
           <Button className="text-sm block font-medium bg-linear-to-r from-purple-600 to-teal-600 hover:from-purple-700 hover:to-teal-700 text-white">
             Get started free
           </Button>
