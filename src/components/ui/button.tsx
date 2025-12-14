@@ -15,7 +15,7 @@ export function Button({ variant = "primary", size = "md", className = "", child
       "bg-gradient-to-r from-purple-600 to-teal-600 hover:from-purple-700 hover:to-teal-700 text-white shadow-md hover:shadow-lg",
     secondary: "bg-gray-100 hover:bg-gray-200 text-gray-900",
     outline: "border-2 border-purple-200 hover:bg-purple-50 hover:border-purple-300 text-purple-700",
-    ghost: "hover:bg-gray-100 text-gray-700",
+    ghost: "hover:bg-gray-100 text-gray-500",
   }
 
   const sizes = {
