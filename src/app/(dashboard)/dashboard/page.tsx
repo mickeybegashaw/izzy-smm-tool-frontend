@@ -1,4 +1,5 @@
 "use client";
+import { Header } from "@/components/dashboard-component/dashboard-header";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 const DashboardPage = () => {
@@ -12,10 +13,9 @@ const DashboardPage = () => {
   };
 
   return (
-    <div>
-      dashboard
-      <button onClick={handleSignOut}>SignOut</button>
-    </div>
+    <main>
+      <Header/>
+    </main>
   );
 };
 
