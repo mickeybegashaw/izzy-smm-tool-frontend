@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
-const AuthLayout = async ({ children }: { children: React.ReactNode }) => {
+const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   const supabase = await createClient();
   const {
     data: { user },
@@ -10,4 +10,4 @@ const AuthLayout = async ({ children }: { children: React.ReactNode }) => {
   return <main>{children}</main>;
 };
 
-export default AuthLayout;
+export default RootLayout;

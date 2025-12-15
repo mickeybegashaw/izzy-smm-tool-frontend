@@ -4,14 +4,55 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Facebook, Instagram, Youtube } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
 
 export default function SignUp() {
+  const supabase = createClient()
+  const router = useRouter()
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   async function handleRegister(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => setLoading(false), 1500);
+    setErrorMessage("");
+
+    if (password !== confirmPassword) {
+      setErrorMessage("Passwords do not match");
+      setLoading(false);
+      return;
+    }
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          company_name: companyName,
+          full_name: fullName,
+          phone,
+        },
+      },
+    });
+
+    setLoading(false);
+
+    if (error) {
+      setErrorMessage(error.message);
+      return;
+    }
+
+    if (data.user){
+      router.push('/dashboard')
+    }
+
   }
 
   return (
@@ -19,9 +60,7 @@ export default function SignUp() {
       {/* Left Side - Promo */}
       <div className="hidden lg:flex flex-1 bg-primary text-primary-foreground relative overflow-hidden">
         <div className="flex flex-col justify-center px-12 z-10 max-w-lg">
-          <h2 className="text-4xl font-bold mb-6">
-            Join Izzy Today!
-          </h2>
+          <h2 className="text-4xl font-bold mb-6">Join Izzy Today!</h2>
           <p className="text-lg opacity-90">
             Create content, engage your audience, and grow your brand with
             Izzy&apos;s all-in-one social media management platform.
@@ -75,69 +114,84 @@ export default function SignUp() {
                 href="/signin"
                 className="text-primary font-semibold hover:underline"
               >
-                Log in
+                Sign In
               </Link>
             </p>
           </div>
 
           {/* Form */}
           <form onSubmit={handleRegister} className="space-y-5">
-            {/* Full Name */}
+            {/* company Name */}
             <div className="flex flex-col md:flex-row justify-between ">
-<div>
-              <label className="block text-sm font-medium mb-2">
-                Company Name
-              </label>
-              <input
-                type="text"
-                required
-                placeholder="Enter your company name"
-                className="w-full px-4 py-3 rounded-lg border border-input bg-background
-                  focus:outline-none focus:ring-4 focus:ring-ring/30"
-              />
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  Company Name <span className="text-gray-400">(optional)</span> 
+                </label>
+                <input
+                  type="text"
+                  value={companyName}
+                  onChange={(e) => setCompanyName(e.target.value)}
+                  placeholder="Enter your company name"
+                  className="w-full px-4 py-3 rounded-lg border"
+                />
+              </div>
+              {/* full Nmae */}
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  Full Name *
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  placeholder="Enter your full name"
+                  className="w-full px-4 py-3 rounded-lg border"
+                />
+              </div>
             </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Full Name
-              </label>
-              <input
-                type="text"
-                required
-                placeholder="Enter your full name"
-                className="w-full px-4 py-3 rounded-lg border border-input bg-background
-                  focus:outline-none focus:ring-4 focus:ring-ring/30"
-              />
-            </div>
-            </div>
-            
 
             {/* Email */}
             <div>
               <label className="block text-sm font-medium mb-2">
-                Email Address
+                Email Address *
               </label>
               <input
                 type="email"
                 required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
-                className="w-full px-4 py-3 rounded-lg border border-input bg-background
-                  focus:outline-none focus:ring-4 focus:ring-ring/30"
+                className="w-full px-4 py-3 rounded-lg border"
+              />
+            </div>
+
+            {/* Phone */}
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Phone Number *
+              </label>
+              <input
+                type="phone"
+                required
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="Enter your Phone Number"
+                className="w-full px-4 py-3 rounded-lg border"
               />
             </div>
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium mb-2">
-                Password
-              </label>
+              <label className="block text-sm font-medium mb-2">Password</label>
               <input
                 type="password"
                 required
                 minLength={6}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="Create a password"
-                className="w-full px-4 py-3 rounded-lg border border-input bg-background
-                  focus:outline-none focus:ring-4 focus:ring-ring/30"
+                className="w-full px-4 py-3 rounded-lg border"
               />
             </div>
 
@@ -150,9 +204,10 @@ export default function SignUp() {
                 type="password"
                 required
                 minLength={6}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Confirm your password"
-                className="w-full px-4 py-3 rounded-lg border border-input bg-background
-                  focus:outline-none focus:ring-4 focus:ring-ring/30"
+                className="w-full px-4 py-3 rounded-lg border"
               />
             </div>
 
@@ -165,6 +220,11 @@ export default function SignUp() {
             >
               {loading ? "Creating account..." : "Create Account"}
             </button>
+            {errorMessage && (
+              <div className="text-sm text-red-500 bg-red-500/10 p-3 rounded-lg">
+                {errorMessage}
+              </div>
+            )}
           </form>
 
           {/* Terms */}

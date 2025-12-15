@@ -3,10 +3,38 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Instagram, Facebook, Youtube } from "lucide-react";
-
+import { useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
 export default function Login() {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    const supabase = createClient()
+    const router = useRouter()
+    const [loading, setLoading] = useState(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+     e.preventDefault();
+    setLoading(true);
+    setErrorMessage("");
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    setLoading(false);
+
+    if (error) {
+      setErrorMessage(error.message);
+      return;
+    }
+    if (data.user) {
+      router.push('/dashboard')
+    }
+
+
+
   };
 
   return (
@@ -22,7 +50,7 @@ export default function Login() {
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-foreground mb-2">
-              Log in to your account
+              Sign in to your account
             </h1>
             <p className="text-muted-foreground">
               Don&apos;t have an account?{" "}
@@ -30,7 +58,7 @@ export default function Login() {
                 href="/signup"
                 className="text-primary font-semibold hover:underline"
               >
-                Register
+                Sign up
               </Link>
             </p>
           </div>
@@ -45,6 +73,8 @@ export default function Login() {
               <input
                 type="email"
                 required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
                 className="w-full px-4 py-3 rounded-lg border border-input bg-background
                   focus:outline-none focus:ring-4 focus:ring-ring/30"
@@ -58,6 +88,8 @@ export default function Login() {
               </label>
               <input
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 placeholder="Enter your password"
                 className="w-full px-4 py-3 rounded-lg border border-input bg-background
@@ -76,13 +108,19 @@ export default function Login() {
             </div>
 
             {/* Submit */}
-            <button
+             <button
               type="submit"
+              disabled={loading}
               className="w-full bg-primary text-primary-foreground font-semibold py-3 rounded-lg
-                hover:opacity-90 focus:ring-4 focus:ring-ring/40 transition"
+                hover:opacity-90 disabled:opacity-60 focus:ring-4 focus:ring-ring/40 transition"
             >
-              Log In
+              {loading ? "Logging in..." : "Log In"}
             </button>
+            {errorMessage && (
+              <div className="text-sm text-red-500 bg-red-500/10 p-3 rounded-lg">
+                {errorMessage}
+              </div>
+            )}
           </form>
         </div>
       </div>

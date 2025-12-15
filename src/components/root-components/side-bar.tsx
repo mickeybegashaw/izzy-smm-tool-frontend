@@ -1,8 +1,9 @@
 "use client"
-import {LogOut, X } from "lucide-react"
+import { X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { ThemeToggle } from "../ui/theme-toggle"
 
 interface SidebarProps {
   mobileOpen: boolean
@@ -29,7 +30,8 @@ export function Sidebar({ mobileOpen, setMobileOpen }: SidebarProps) {
         `}
       >
         {/* Close button on mobile */}
-        <div className="md:hidden flex justify-end p-4">
+        <div className="md:hidden flex justify-between p-4">
+          <ThemeToggle />
           <Button variant="ghost" onClick={() => setMobileOpen(false)}>
             <X className="w-6 h-6" />
           </Button>
@@ -40,25 +42,15 @@ export function Sidebar({ mobileOpen, setMobileOpen }: SidebarProps) {
           {navItems.map((item) => {
             return (
               <Link
-                key={item.name}
-                href={item.path}
-                className={`flex items-center gap-3 p-3 text-sm font-medium rounded-lg hover:bg-sidebar-accent/10 transition-colors ${item.name === "Sign In" ? "bg-primary text-bold w-[90%] mx-auto " : ""}`}
+              key={item.name}
+              href={item.path}
+              className={`flex items-center gap-3 p-3 text-sm font-medium rounded-lg hover:bg-sidebar-accent/10 transition-colors ${item.name === "Sign In" ? "bg-primary text-bold w-[90%] mx-auto " : ""}`}
               >
                 {item.name}
               </Link>
             )
           })}
         </nav>
-
-        {/* Bottom actions */}
-        <div className="p-4 border-t border-sidebar-border flex flex-col gap-2">
-          <Button
-            variant="ghost"
-            className="flex items-center gap-2 justify-start text-sm font-medium hover:bg-sidebar-accent/10"
-          >
-            <LogOut className="w-5 h-5" />
-          </Button>
-        </div>
       </aside>}
 
       {/* Overlay for mobile */}
