@@ -125,10 +125,11 @@ export default function SignUp() {
             <div className="flex flex-col md:flex-row justify-between ">
               <div>
                 <label className="block text-sm font-medium mb-2">
-                  Company Name <span className="text-gray-400">(optional)</span> 
+                  Company Name <span className="text-gray-400">(Required)</span> 
                 </label>
                 <input
                   type="text"
+                  required
                   value={companyName}
                   onChange={(e) => setCompanyName(e.target.value)}
                   placeholder="Enter your company name"

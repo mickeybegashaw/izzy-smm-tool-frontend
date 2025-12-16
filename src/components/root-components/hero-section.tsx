@@ -70,11 +70,11 @@ export function HeroSection() {
         </div>
 
         {/* Dashboard preview */}
-        <div className="mt-16 max-w-6xl mx-auto">
+        <div className="mt-16 max-w-4xl mx-auto">
           <div className="relative rounded-xl border border-purple-200/50 bg-linear-to-b from-white to-purple-50/30 p-2 shadow-2xl shadow-purple-500/10">
             <div className="aspect-video rounded-lg bg-linear-to-br from-purple-100 via-teal-50 to-purple-100 flex items-center justify-center">
               <img
-                src="/modern-social-media-dashboard-with-purple-and-teal.jpg"
+                src="/hero-image.png"
                 alt="SocialFlow Dashboard"
                 className="w-full h-full object-cover rounded-lg"
               />

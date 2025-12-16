@@ -1,7 +1,7 @@
 export function StatsSection() {
   const stats = [
-    { value: "50K+", label: "Active users" },
-    { value: "2M+", label: "Posts scheduled" },
+    { value: "30+", label: "Active users" },
+    { value: "150", label: "Posts scheduled" },
     { value: "99.9%", label: "Uptime" },
     { value: "4.9/5", label: "User rating" },
   ]
