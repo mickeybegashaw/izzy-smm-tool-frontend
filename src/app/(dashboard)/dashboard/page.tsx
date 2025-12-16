@@ -1,5 +1,4 @@
-import { DashboardSidebar } from "@/components/dashboard-component/dashboard-sidebar"
-import { DashboardHeader } from "@/components/dashboard-component/dashboard-header"
+
 import { OverviewStats } from "@/components/dashboard-component/overview"
 import { EngagementChart } from "@/components/dashboard-component/engagement-chart"
 import { RecentPosts } from "@/components/dashboard-component/recent-posts"
@@ -8,10 +7,7 @@ import { QuickActions } from "@/components/dashboard-component/quick-action"
 
 export default function DashboardPage() {
   return (
-    <div className="flex min-h-screen bg-background">
-      <DashboardSidebar />
-      <div className="flex-1 flex flex-col">
-        <DashboardHeader />
+    <div className=" bg-background">
         <main className="flex-1 p-6 space-y-6">
           <div className="flex flex-col md:flex-row gap-2 items-center justify-between">
             <div>
@@ -31,6 +27,5 @@ export default function DashboardPage() {
           <ScheduledPosts />
         </main>
       </div>
-    </div>
   )
 }

@@ -22,11 +22,11 @@ const navigation = [
   { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
   {
     name: "Connected Accounts",
-    href: "/connected-accounts",
+    href: "/dashboard/connected-accounts",
     icon:   Share2
 ,
   },
-  { name: "Content Calendar", href: "/dashboard/calendar", icon: Calendar },
+  { name: "Content Calendar", href: "/dashboard/content-calendar", icon: Calendar },
   { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
   { name: "Posts", href: "/dashboard/posts", icon: MessageSquare },
   { name: "Settings", href: "/dashboard/settings", icon: Settings },
